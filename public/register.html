@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>register page</h1>
+
+
+
+    <article class="add-parent">
+        
+        <div class="form">
+            <section class="sidebar">
+                <div class="acc">
+                    <h2>Account name</h2>
+                </div>
+                <div class="property-list">
+                    <div class="head">Your Properties</div>
+                    <ul class="property-lists">
+                        <!-- <li class="list">Property 1</li>
+                        <li class="list">Property 2</li>
+                        <li class="list">Property 3</li> -->
+                        <li class="list accordion">Property 3</li>
+                        <div class="accordion-content">
+                            <p class="price">Rs. 3892 <span class="accordion-hide-btn">&#9587;</span></p>
+                            <p>Location : jalgaon</p>
+                            <button>remove</button>
+                            <button>Edit</button>
+                            <button>view</button>
+                        </div>
+                    </ul>
+                </div>
+            </section>
+            <section class="main-form">
+                <form action="/form-data" method="post" class="main-form" enctype="multipart/form-data">
+                    <div class="email inp">
+                        <label class="lbl" for="email">Your email</label>
+                        <input type="email" name="email" id="email">
+                    </div>
+                    <div class="name inp">
+                        <label class="lbl" for="price">Price</label>
+                        <input type="number" name="price" id="price">
+                    </div>
+                    <div class="address inp">
+                        <label class="lbl" for="location">Property Location</label>
+                        <input type="text" name="location" id="location">
+                    </div>
+                    <div class="type inp">
+                        <label class="lbl" for="type">Property Type</label>
+                        <select name="type" id="type" class="select">
+                            <option value="Land">Land</option>
+                            <option value="House">House</option>
+                            <option value="Flat">Flat</option>
+                            <option value="Shop">Shop</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                    <div class="file inp">
+                        <label class="lbl" for="file">Upload image</label>
+                        <input type="file" name="img" id="file" required multiple>
+                    </div>
+                    <div class="desc inp">
+                        <label class="lbl" for="desc">Description</label>
+                        <input type="text" name="desc" id="desc">
+                    </div>
+                    <!-- id will be hidden -->
+                    <div class="id inp">
+                        <label class="lbl" for="id">ID</label>
+                        <input type="text" name="id" id="id">
+                    </div>
+                    <div class="add-btn">
+                        <input type="submit" value="submit" class="btn">
+                    </div>
+                </form>
+            </section>
+        </div>
+    </article>
+
+
+
+</body>
+</html>

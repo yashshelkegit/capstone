@@ -1,9 +1,7 @@
 
-
-
 let products;
 const product = async () => {
-	const response = await fetch("../products");
+	const response = await fetch("/products");
 	const data = await response.json();
 	products = data;
 	displayProducts(products);
@@ -68,13 +66,11 @@ let displayed_products;
 
 const displayProducts = async (products, calledFrom) => {
 	displayed_products = products;
-
 	if (products.length === 0) {
 		//this if block has bug
 		mainContent.innerHTML = "<h2>No Products found</h2>";
 		return;
 	}
-
 	if (calledFrom) {
 		mainContent.innerHTML = "<h2>Showing " + calledFrom + "....</h2>";
 	} else {
@@ -116,29 +112,29 @@ mainContent.addEventListener("click", (e) => {
 			return product.id == id;
 		});
 		console.log(modal_product);
-		modal_img.src = modal_product[0].image;
-		modal_name.textContent = `this ${modal_product[0].type} can be yours`;
-		modal_price.textContent = `Rs. ${modal_product[0].price}`;
-		modal_desc.textContent = modal_product[0].desc;
-		modal_contact.dataset.contact = modal_product[0].contact;
-
-		//returns undefined if not found
-		console.log(cart.find((item) => item.id === modal_product[0].id));
-		if (cart.find((item) => item.id === modal_product[0].id)) {
-			console.log("saved");
-			save_btn.textContent = "Remove from saved";
-		} else {
-			save_btn.textContent = "Save for review";
-		}
-
-		modal.style.maxHeight = "100%";
-		// modal.style.maxWidth = "100%";
+		openModal(modal_product);
 	}
 });
 
+function openModal(product){
+	modal_img.src = modal_product[0].image;
+	modal_name.textContent = `this ${modal_product[0].type} can be yours`;
+	modal_price.textContent = `Rs. ${modal_product[0].price}`;
+	modal_desc.textContent = modal_product[0].desc;
+	modal_contact.dataset.contact = modal_product[0].contact;
+	//returns undefined if not found
+	console.log(cart.find((item) => item.id === modal_product[0].id));
+	if (cart.find((item) => item.id === modal_product[0].id)) {
+		console.log("saved");
+		save_btn.textContent = "Remove from saved";
+	} else {
+		save_btn.textContent = "Save for review";
+	}
+	modal.style.maxHeight = "100%";
+}
+
 document.querySelector(".modal-cross").addEventListener("click", (e) => {
 	modal.style.maxHeight = null;
-	// modal.style.maxWidth = null;
 });
 
 
@@ -171,13 +167,29 @@ nav_btn.addEventListener("click", (e) => {
 		parent.style.display = "flex";
 		add_parent.style.display = "none";
 		// e.target.textContent === "buy";
+		product();
 	}
 	if (e.target.textContent === "sell") {
+		// authenticate();
 		parent.style.display = "none";
 		add_parent.style.display = "block";
 	}
 	e.target.textContent = parent.style.display === "none" ? "buy" : "sell";
 });
+
+async function authenticate(){
+	const userInfo = localStorage.getItem('user');
+	if(userInfo){
+		const {userName, password} = JSON.parse(userInfo);
+		// showPropertyPage();
+		parent.style.display = "none";
+		add_parent.style.display = "block";
+	}else{
+		const response = await fetch("/login");
+		console.log(response.body)
+		// document.body.innerHTML = response;
+	}
+}
 
 const bodyDiv = document.querySelector(".body");
 plus.addEventListener("click", (e) => {
@@ -214,78 +226,11 @@ save_btn.addEventListener("click", () => {
 	save_btn.textContent = "Remove from saved";
 });
 
-const userProperties = [
-	{
-		id: 18,
-		image: "./temp/desk3.jpg",
-		type: "name",
-		price: 9900,
-		location: "hydrabad",
-		desc: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum",
-		contact: "yash@gmail.com",
-	},
-	{
-		id: 19,
-		image: "./temp/desk4.jpg",
-		type: "name",
-		price: 3700,
-		location: "jalgaon",
-		desc: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum",
-		contact: "yash@gmail.com",
-	},
-	{
-		id: 20,
-		image: "./temp/desk5.webp",
-		type: "name",
-		price: 7050,
-		location: "jalgaon",
-		desc: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum",
-		contact: "yash@gmail.com",
-	},
-];
-const listedProperties = document.querySelector(".property-lists");
-//show listed properties when clicked on sell btn
-const showListedProperties = () => {
-	const list = document.createElement("li");
-	userProperties.forEach((item) => {
-		list.innerHTML += `<li class="list accordion">${item.type}</li>
-							<div class="accordion-content">
-                                <p class="accordion-price">${item.price}<span class="accordion-hide-btn">&#9587;</span></p>
-                                <p class="accordion-location">${item.location}</p>
-                                <button class="accordion-btn">remove</button>
-                                <button class="accordion-btn">Edit</button>
-                                <button class="accordion-btn">view</button>
-                            </div>`;
-	});
-	listedProperties.append(list);
-};
-showListedProperties();
-
-//accordion module
-const accordion = document.querySelectorAll(".accordion");
-const accordionContent = document.querySelectorAll(".accordion-content");
-accordion.forEach((item) => {
-	item.addEventListener("click", (e) => {
-		accordionContent.forEach((content) => {
-			content.style.maxHeight = "0rem";
-			content.style.padding = "0rem";
-			content.previousElementSibling.classList.remove("active");
-		});
-		if (e.target.nextElementSibling.style.maxHeight === "0rem") {
-			e.target.nextElementSibling.style.maxHeight = "12rem";
-			e.target.nextElementSibling.style.padding = ".4rem";
-			e.target.classList.add("active");
-			return;
-		}
-		e.target.nextElementSibling.style.maxHeight = "12rem";
-		e.target.nextElementSibling.style.padding = ".4rem";
-	});
-});
 
 //getting form data////////////////////////////////////////////////////submit btn///////////////
 // const email = document.getElementById("email");
 // const price = document.getElementById("price");
-// const locaion = document.getElementById("location");
+// const location = document.getElementById("location");
 // const type = document.getElementById("type");
 // const img = document.getElementById("file");
 // const desc = document.getElementById("desc");
@@ -304,14 +249,126 @@ accordion.forEach((item) => {
 // 	console.log(JSON.parse(inputs_json));
 // });///////////////////////////////////////////////////////////////////////////////////////
 
-Array.from(document.getElementsByClassName("accordion-hide-btn")).forEach(
-	(element) => {
-		element.addEventListener("click", (e) => {
-			e.target.parentElement.parentElement.style.maxHeight = "0rem";
-			e.target.parentElement.parentElement.style.padding = "0rem";
-			e.target.parentElement.parentElement.previousElementSibling.classList.remove(
-				"active"
-			);
-		});
+
+//fetch user properties
+const userAccountId = document.getElementById('user-account-id');
+document.querySelector('.check-property').addEventListener('click',async(e)=>{
+	getUserProperty();
+})
+async function getUserProperty(){
+	const value = userAccountId.value;
+	console.log(value)
+	console.log(typeof value)
+	if(value !== ''){
+		const body = {
+			accountId : value
+		};
+		const options = {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify(body)
+		}
+		const response = await fetch('/user-property', options);
+		const data = await response.json();
+		console.log(data.length);
+		if(data.length !== 0){
+			showListedProperties(data);
+		}else{
+			console.log('no properties found');
+			alert('No Property found');
+		}
+	}else{
+		console.log('please enter value');
+		alert('Enter Account ID');
 	}
-);
+}
+
+const listedProperties = document.querySelector(".property-lists");
+const showListedProperties = (userProperties) => {
+	const list = document.createElement("li");
+	listedProperties.innerHTML = "";
+	userProperties.forEach((item) => {
+		list.innerHTML += `<li class="list accordion">${item.type}</li>
+							<div class="accordion-content">
+                                <p class="accordion-price">${item.price}<span class="accordion-hide-btn">&#9587;</span></p>
+                                <p class="accordion-location">${item.location}</p>
+                                <button class="accordion-btn accordion-remove-btn" data-id=${item.id}>remove</button>
+                                <button class="accordion-btn accordion-edit-btn" data-id=${item.id}>Edit</button>
+                                <button class="accordion-btn accordion-view-btn" data-id=${item.id}>view</button>
+                            </div>`;
+	});
+	listedProperties.append(list);
+	addListenerToAccordion();
+	addListenerToAccordionHideBtn();
+	addListenerToAccordionRemoveBtn();
+	addListenerToAccordionViewBtn();
+};
+
+
+function addListenerToAccordion(){
+	const accordion = document.getElementsByClassName("accordion");
+	const accordionContent = document.querySelectorAll(".accordion-content");
+	Array.from(accordion).forEach((item) => {
+		console.log(accordion)
+		item.addEventListener("click", (e) => {
+			accordionContent.forEach((content) => {
+				content.style.maxHeight = "0rem";
+				content.style.padding = "0rem";
+				content.previousElementSibling.classList.remove("active");
+			});
+			if (e.target.nextElementSibling.style.maxHeight === "0rem") {
+				e.target.nextElementSibling.style.maxHeight = "12rem";
+				e.target.nextElementSibling.style.padding = ".4rem";
+				e.target.classList.add("active");
+				return;
+			}
+			e.target.nextElementSibling.style.maxHeight = "12rem";
+			e.target.nextElementSibling.style.padding = ".4rem";
+		});
+	});
+}
+function addListenerToAccordionHideBtn() {
+	Array.from(document.getElementsByClassName("accordion-hide-btn")).forEach(
+		(element) => {
+			element.addEventListener("click", (e) => {
+				e.target.parentElement.parentElement.style.maxHeight = "0rem";
+				e.target.parentElement.parentElement.style.padding = "0rem";
+				e.target.parentElement.parentElement.previousElementSibling.classList.remove(
+					"active"
+				);
+			});
+		}
+	);
+}
+
+function addListenerToAccordionViewBtn(){
+	document.querySelectorAll('.accordion-view-btn').forEach((item)=>{
+		item.addEventListener('click', (e)=>{
+			const id = e.target.dataset.id;
+			console.log(id);
+			if (id) {
+				console.log(typeof id);
+				modal_product = products.filter((product) => {
+					return product.id == id;
+				});
+				console.log(modal_product);
+				openModal(modal_product);
+			}
+			})
+	})
+}
+
+
+//deleting property
+function addListenerToAccordionRemoveBtn(){
+	document.querySelectorAll('.accordion-remove-btn').forEach(item=>{
+		item.addEventListener('click',async (e)=>{
+			console.log(e.target.parentElement.previousElementSibling);
+			e.target.parentElement.previousElementSibling.remove();
+			e.target.parentElement.remove();
+			const response = await fetch('/delete/'+e.target.dataset.id);
+		})
+	})
+}

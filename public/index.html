@@ -1,43 +1,85 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="index.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="index.css" />
     <script defer src="index.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
     <title>Capstone Project</title>
-</head>
-<body>
+  </head>
+  <body>
     <nav class="navbar">
-        <div class="icon">
-            <h3>Real Estate</h3>
-        </div>
-        <div class="links">
-            <div class="link nav-btn">sell</div>
-            <div class="link">Login</div>
-        </div>
+      <div class="icon">
+        <h3>Real Estate</h3>
+      </div>
+      <div class="links">
+        <div class="link nav-btn">sell</div>
+        <div class="link">Login</div>
+      </div>
     </nav>
     <div class="body">
-        <article class="parent">
-            <section class="sidebar">
-                <div class="search">
-                    <input type="search" size="30" placeholder="Search for location..">
-                </div>
-                <ul class="lists">
-                    <li class="list" data-id="all">ALL</li>
-                    <li class="list" data-id="mumbai">Rooms</li>
-                    <li class="list" data-id="delhi">Farms</li>
-                    <li class="list" data-id="jalgaon">Flats</li>
-                    <li class="list" data-id="pune">Land area</li>
-                </ul><br>
-                <label class="range-lbl" for="range">Select Range :</label>
-                <input type="range" class="range" name="range" value="100" step="5">
-                <p>Max :<span class="range-otp"></span></p>
-            </section>
-            <section class="main-content">
-                <!-- <div class="product">
+      <div class="modal">
+        <h1><button class="modal-cross">&#9587;</button></h1>
+        <div class="modal-content">
+          <div class="modal-section">
+            <img src="./temp/sofa3.jpg" alt="" srcset="" class="modal-img" />
+          </div>
+          <div class="modal-section">
+            <h2 class="modal-name">Name</h2>
+            <p class="modal-price">Rs. 4509</p>
+            <p class="modal-desc">
+              Lorem Ipsum is simply dummy text of the printing and typesetting
+              industry. Lorem Ipsum has been the industry's standard dummy text
+              ever since the 1500s, when an unknown printer took a galley of
+              type and scrambled it to make a type specimen book. It has
+              survived not only five centuries, but also the leap into
+              electronic typesetting, remaining essentially unchanged. It was
+              popularised in the 1960s with the release of Letraset sheets
+              containing Lorem Ipsum passages, and more recently with desktop
+              publishing software like Aldus PageMaker including versions of
+              Lorem Ipsum.
+            </p>
+            <button
+              class="modal-contact-btn email-btn"
+              data-contact="yash@gmail.com"
+            >
+              Contact now
+            </button>
+            <button class="modal-contact-btn save-btn" data-cart="">
+              Save for review
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <article class="parent">
+        <section class="sidebar">
+          <div class="search">
+            <input
+              type="search"
+              size="30"
+              placeholder="Search for location.."
+            />
+          </div>
+          <ul class="lists">
+            <li class="list" data-id="all">ALL</li>
+            <li class="list" data-id="mumbai">Rooms</li>
+            <li class="list" data-id="delhi">Farms</li>
+            <li class="list" data-id="jalgaon">Flats</li>
+            <li class="list" data-id="pune">Land area</li>
+          </ul>
+          <br />
+          <label class="range-lbl" for="range">Select Range :</label>
+          <input type="range" class="range" name="range" value="100" step="5" />
+          <p>Max :<span class="range-otp"></span></p>
+        </section>
+        <section class="main-content">
+          <!-- <div class="product">
                         <img src="img.jpg" alt="name "><br>
                         <span class="name">name 1</span><br>
                         <span class="price">6000</span>
@@ -47,104 +89,90 @@
                         <span class="name">name 1</span><br>
                         <span class="price">6000</span>
                     </div> -->
-        
-            </section>
-            <div class="modal">
-                <h1><button class="modal-cross">&#9587;</button></h1>
-                <div class="modal-content">
-                    <div class="modal-section">
-                        <img src="./temp/sofa3.jpg" alt="" srcset="" class="modal-img">
-                    </div>
-                    <div class="modal-section">
-                        <h2 class="modal-name">Name</h2>
-                        <p class="modal-price">Rs. 4509</p>
-                        <p class="modal-desc">
-                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
-                            industry's standard
-                            dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to
-                            make a type specimen
-                            book. It has survived not only five centuries, but also the leap into electronic typesetting,
-                            remaining essentially
-                            unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem
-                            Ipsum passages, and more
-                            recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-                        </p>
-                        <button class="modal-contact-btn email-btn" data-contact="yash@gmail.com">Contact now</button>
-                        <button class="modal-contact-btn save-btn" data-cart="">Save for review</button>
-        
-                    </div>
-                </div>
+        </section>
+        <!-- //modal// -->
+        <div class="add-plus"><i class="fa fa-shopping-cart"></i></div>
+      </article>
+      <article class="add-parent">
+        <div class="form">
+          <section class="sidebar">
+            <div class="acc">
+              <h2>Manage Properties</h2>
             </div>
-            <div class="add-plus"><i class="fa fa-shopping-cart"></i></div>
-        </article>
-        
-        <article class="add-parent">
-        
-            <div class="form">
-                <section class="sidebar">
-                    <div class="acc">
-                        <h2>Account name</h2>
-                    </div>
-                    <div class="property-list">
-                        <div class="head">Your Properties</div>
-                        <ul class="property-lists">
-                            <!-- <li class="list">Property 1</li>
+            <div class="property-list">
+              <div class="head">
+                <p>Enter your account ID to check your Properties</p>
+              </div>
+              <input type="text" name="useraccount-id" id="user-account-id" class="user-account-id"/>
+              <input type="submit" name="" value="Check" class="check-property"/><br /><br />
+              <hr />
+              <ul class="property-lists">
+                <!-- <li class="list">Property 1</li>
                             <li class="list">Property 2</li>
                             <li class="list">Property 3</li> -->
-                            <li class="list accordion">Property 3</li>
-                            <div class="accordion-content">
-                                <p class="price">Rs. 3892 <span class="accordion-hide-btn">&#9587;</span></p>
-                                <p>Location : jalgaon</p>
-                                <button>remove</button>
-                                <button>Edit</button>
-                                <button>view</button>
-                            </div>
-                        </ul>
-                    </div>
-                </section>
-                <form action="/form-data" method="post" class="main-form" enctype="multipart/form-data">
-                    <div class="email inp">
-                        <label class="lbl" for="email">Your email</label>
-                        <input type="email" name="email" id="email">
-                    </div>
-                    <div class="name inp">
-                        <label class="lbl" for="price">Price</label>
-                        <input type="number" name="price" id="price">
-                    </div>
-                    <div class="address inp">
-                        <label class="lbl" for="location">Property Location</label>
-                        <input type="text" name="location" id="location">
-                    </div>
-                    <div class="type inp">
-                        <label class="lbl" for="type">Property Type</label>
-                        <select name="type" id="type" class="select">
-                            <option value="Land">Land</option>
-                            <option value="House">House</option>
-                            <option value="Flat">Flat</option>
-                            <option value="Shop">Shop</option>
-                            <option value="Other">Other</option>
-                        </select>
-                    </div>
-                    <div class="file inp">
-                        <label class="lbl" for="file">Upload image</label>
-                        <input type="file" name="img" id="file" required multiple>
-                    </div>
-                    <div class="desc inp">
-                        <label class="lbl" for="desc">Description</label>
-                        <input type="text" name="desc" id="desc">
-                    </div>
-                    <!-- id will be hidden -->
-                    <div class="id inp">
-                        <label class="lbl" for="id">ID</label>
-                        <input type="text" name="id" id="id">
-                    </div>
-                    <div class="add-btn">
-                        <input type="submit" value="submit" class="btn">
-                    </div>
-                </form>
+                <!-- <li class="list accordion">Property 3</li>
+                <div class="accordion-content">
+                  <p class="price">
+                    Rs. 3892 <span class="accordion-hide-btn">&#9587;</span>
+                  </p>
+                  <p>Location : jalgaon</p>
+                  <button>remove</button>
+                  <button>Edit</button>
+                  <button>view</button>
+                </div> -->
+              </ul>
             </div>
-        </article>
+          </section>
+          <form
+            action="/form-data"
+            method="post"
+            class="main-form"
+            enctype="multipart/form-data"
+          >
+            <div class="email inp">
+              <label class="lbl" for="email">Your email</label>
+              <input type="email" name="email" id="email" />
+            </div>
+            <div class="name inp">
+              <label class="lbl" for="price">Price</label>
+              <input type="number" name="price" id="price" />
+            </div>
+            <div class="address inp">
+              <label class="lbl" for="location">Property Location</label>
+              <input type="text" name="location" id="location" />
+            </div>
+            <div class="type inp">
+              <label class="lbl" for="type">Property Type</label>
+              <select name="type" id="type" class="select">
+                <option value="Land">Land</option>
+                <option value="House">House</option>
+                <option value="Flat">Flat</option>
+                <option value="Shop">Shop</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+            <div class="file inp">
+              <label class="lbl" for="file">Upload image</label>
+              <input type="file" name="img" id="file" required multiple />
+            </div>
+            <div class="desc inp">
+              <label class="lbl" for="desc">Description</label>
+              <input type="text" name="desc" id="desc" />
+            </div>
+            <!-- id will be hidden -->
+            <div class="id inp">
+              <label class="lbl" for="id"
+                >Account ID (please enter same acc. id for all your
+                properties)</label
+              >
+              <input type="text" name="id" id="id" />
+            </div>
+            <div class="add-btn">
+              <input type="submit" value="submit" class="btn" />
+            </div>
+          </form>
+        </div>
+      </article>
     </div>
-    
-</body>
+  </body>
 </html>

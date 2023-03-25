@@ -1,6 +1,8 @@
-// import { products } from "./product.js";
+
 import express from "express";
-import nodemailer from 'nodemailer'
+import nodemailer from 'nodemailer';
+// const loginPage = fs.readFileSync('./public/register.html');
+
 
 import dotenv from "dotenv";
 dotenv.config();
@@ -10,7 +12,7 @@ import property from "./models/db.js";
 import bodyParser from "body-parser";
 
 //for image upload
-import fileUpload from "express-fileUpload"
+import fileUpload from "express-fileUpload";
 
 const app = express();
 app.use(express.static(process.env.PUBLIC_DIR));
@@ -21,16 +23,8 @@ app.use(bodyParser.json());
 app.use(fileUpload());
 
 
-let transporter = nodemailer.createTransport({
-    service: 'gmail',
-    auth: {
-        user: process.env.E_MAIL,
-        pass: process.env.E_MAIL_PASSWORD
-    }
-});
-
 app.get("/products", (req, res) => {
-	let products;
+	// let products;
 	console.log("req arrrived");
 	property.find()
 	.then((data)=>console.log(res.end(JSON.stringify(data))))
@@ -38,12 +32,18 @@ app.get("/products", (req, res) => {
 	
 });
 
+app.post("/user-property", (req, res)=>{
+	let accountId = req.body.accountId;
+	property.find({accountId:accountId})
+	.then(data=>res.end(JSON.stringify(data)))
+	.catch(err=>console.log(err));
+})
+
 app.post("/form-data", async(req, res) =>{
 	// console.log(req)
 	if (!req.files || Object.keys(req.files).length === 0) {
 		return res.status(400).send('No files were uploaded.');
 	  }
-	
 	  const image = req.files.img;
 	
 	  image.mv(`./public/temp/${image.name}`, (err) => {
@@ -53,7 +53,8 @@ app.post("/form-data", async(req, res) =>{
 		// res.send(`File uploaded: <img src="/uploads/${image.name}" alt="Uploaded Image">`);
 	  });
 	const newProperty = new property({
-		id: req.body.id,
+		id: await property.generateId(),
+		accountId: req.body.id,
 		image: `./temp/${image.name}`,
 		type: req.body.type,
 		price: req.body.price,
@@ -71,7 +72,19 @@ app.post("/form-data", async(req, res) =>{
 	});
 })
 
+app.get('/delete/:id', (req,res)=>{
+	property.deleteOne({id:req.params.id})
+	.then(data=>console.log('deleted successfully '+data))
+	.catch(err=>console.log(err));
+})
 
+let transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+        user: process.env.E_MAIL,
+        pass: process.env.E_MAIL_PASSWORD
+    }
+});
 app.post("/contact", (req,res)=>{
 	let mailOptions = {
 		from: process.env.E_MAIL,
@@ -90,6 +103,7 @@ app.post("/contact", (req,res)=>{
 	});
 
 })
+
 
 
 app.listen(process.env.PORT);

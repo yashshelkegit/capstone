@@ -1,0 +1,107 @@
+.add-parent{
+    /* border: 1px solid red; */
+    /* padding: 1rem; */
+    display: none;
+}
+.form{
+    /* border: 1px solid blue; */
+    display: flex;
+    justify-content: center;
+    padding: 1rem;
+}
+.form .sidebar{
+    padding: 0px 2rem 0 0;
+}
+.main-form{
+    /* border: 1px solid blue; */
+    padding: 1rem;
+    box-shadow: 5px 5px 15px gray;
+}
+.inp{
+    /* border: 1px solid yellow; */
+    margin-bottom: 20px;
+    padding: 5px;
+    transition: .4s;
+}
+.select{
+    width: 30rem;
+    padding: 5px;
+    border: none;
+    background: transparent;
+    border-bottom: 2px solid rgb(61, 61, 61);
+}
+
+.main-form input{
+    display: block;
+    width: 30rem;
+    padding: 1rem;
+    border: none;
+    border-bottom: 2px solid rgb(61, 61, 61);
+    box-shadow: 1px 1px 5px gray;
+    background: transparent;
+    transition: all .3s;
+    border-radius: 5px;
+}
+.lbl{
+    color: rgb(66, 66, 66);
+    /* border: 1px solid red; */
+    width: 30rem;
+    text-align: center;
+    display: block;
+    padding: 5px;
+    transition: all .3s;
+}
+.main-form .inp:hover .lbl{
+    font-size: 1.2rem;
+}
+
+.acc{
+    margin-bottom: 2rem;
+}
+
+.add-btn .btn{
+    border: none;
+    background: var(--icon-clr);
+    margin: auto;
+    padding: 1rem;
+    color: white;
+    font-size: 1.2rem;
+    transition: all .3s;
+    cursor: pointer;
+}
+.add-btn .btn:hover{
+    box-shadow: 5px 5px 15px gray;
+}
+.accordion-content{
+    background: rgb(232, 223, 223);
+    /* padding: .5rem; */
+    max-height: 0rem;
+    display: flex;
+    flex-direction: column;
+    color: rgb(79, 79, 79);
+    max-height: 0px;
+    overflow: hidden;
+    transition: .2s;
+}
+.accordion-content button{
+    /* width: 6rem; */
+    padding: .2rem;
+}
+.accordion-content *{
+    margin-bottom: 1rem;
+    position: relative;
+}
+.accordion-hide-btn{
+    position: absolute;
+    right: 1%;
+    cursor: pointer;
+    text-align: center;
+    transition: .3s;
+}
+.accordion-hide-btn:hover{
+    font-size: 1.5rem;
+}
+.property-lists .active{
+    background: var(--icon-hover-clr);
+    cursor: default;
+}
