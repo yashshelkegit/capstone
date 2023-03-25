@@ -11,7 +11,6 @@ main().catch((err)=>console.log(err));
 
 const {Schema} = mongoose;
 const propertySchema = new Schema({
-	id: {type:Number,unique:true},
 	accountId: String,
 	image: String,
 	type: String,
@@ -20,12 +19,14 @@ const propertySchema = new Schema({
 	desc: String,
 	contact: String
 });
-propertySchema.statics.generateId = async function() {
-	// find the maximum ID value
-	const maxProduct = await this.findOne().sort('-id');
-	const maxId = maxProduct ? maxProduct.id : 0;
-	return maxId + 1;
-};
+// id: {type:Number,unique:true},
+
+// propertySchema.statics.generateId = async function() {
+// 	// find the maximum ID value
+// 	const maxProduct = await this.findOne().sort('-id');
+// 	const maxId = maxProduct ? maxProduct.id : 0;
+// 	return maxId + 1;
+// };
 
 const property = new mongoose.model("property", propertySchema);
 

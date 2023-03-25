@@ -53,7 +53,6 @@ app.post("/form-data", async(req, res) =>{
 		// res.send(`File uploaded: <img src="/uploads/${image.name}" alt="Uploaded Image">`);
 	  });
 	const newProperty = new property({
-		id: await property.generateId(),
 		accountId: req.body.id,
 		image: `./temp/${image.name}`,
 		type: req.body.type,
@@ -62,6 +61,8 @@ app.post("/form-data", async(req, res) =>{
 		desc: req.body.desc,
 		contact: req.body.email
 	})
+	
+	// id: await property.generateId(),
 
 	await newProperty.save()
 	.then(()=>{
@@ -73,8 +74,33 @@ app.post("/form-data", async(req, res) =>{
 })
 
 app.get('/delete/:id', (req,res)=>{
-	property.deleteOne({id:req.params.id})
+	property.deleteOne({_id:req.params.id})
 	.then(data=>console.log('deleted successfully '+data))
+	.catch(err=>console.log(err));
+})
+
+app.get('/edit/:id', (req, res)=>{
+	property.findOne({_id:req.params.id})
+	.then(data=>res.end(JSON.stringify(data)))
+	.catch(err=>console.log(err));
+})
+
+app.post('/update-data/:id', (req, res)=>{
+	property.updateOne(
+		{_id : req.params.id},
+		{$set:{
+			accountId: req.body.id,
+			image: `./temp/${req.files.img.name}`,
+			type: req.body.type,
+			price: req.body.price,
+			location: req.body.location,
+			desc: req.body.desc,
+			contact: req.body.email
+		}}
+	).then(data=>{
+		console.log('updated successfully '+data);
+		res.status(201).redirect('/');
+	})
 	.catch(err=>console.log(err));
 })
 

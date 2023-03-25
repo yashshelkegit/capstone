@@ -1,10 +1,13 @@
 
+
+
 let products;
 const product = async () => {
 	const response = await fetch("/products");
 	const data = await response.json();
 	products = data;
 	displayProducts(products);
+	console.log(products[0]._id)
 };
 product();
 
@@ -77,8 +80,8 @@ const displayProducts = async (products, calledFrom) => {
 		mainContent.innerHTML = "";
 	}
 	products.forEach((product) => {
-		const element = `<div class="product" data-id="${product.id}">
-                <img src="${product.image}" alt="${product.type}" data-id="${product.id}"><br>
+		const element = `<div class="product" data-id="${product._id}">
+                <img src="${product.image}" alt="${product.type}" data-id="${product._id}"><br>
                 <div class="detail">
 				<span class="name">${product.type}</span><br>
                 <span class="price">Rs. ${product.price}</span>
@@ -106,10 +109,11 @@ let modal_product;
 
 mainContent.addEventListener("click", (e) => {
 	const id = e.target.dataset.id;
+	console.log(id)
 	if (id) {
 		console.log(typeof id);
 		modal_product = products.filter((product) => {
-			return product.id == id;
+			return product._id === id;
 		});
 		console.log(modal_product);
 		openModal(modal_product);
@@ -248,7 +252,52 @@ save_btn.addEventListener("click", () => {
 // 	inputs_json = JSON.stringify(inputs_array);
 // 	console.log(JSON.parse(inputs_json));
 // });///////////////////////////////////////////////////////////////////////////////////////
+const email_inp = document.getElementById("email");
+const price_inp = document.getElementById("price");
+const address_inp = document.getElementById("location");
+const type_inp = document.getElementById("type");
+const img_inp = document.getElementById("file");
+const desc_inp = document.getElementById("desc");
+const accountId_inp = document.getElementById("id");
+const main_form = document.querySelector(".main-form");
+const submitBtn = document.querySelector('.form-submit-btn');
 
+main_form.addEventListener('submit', (e)=>{
+	e.preventDefault();
+	const value = submitBtn.value;
+	if(value === 'Submit'){
+		console.log(submitBtn.value)
+	}
+	if(value === 'Update'){
+		console.log(main_form)
+		main_form.setAttribute('action', '/update-data/'+submitBtn.dataset.id);
+		console.log(e.target.value)
+		main_form.submit();
+	}
+})
+//editing property
+function addListenerToAccordionEditBtn(){
+	document.querySelectorAll('.accordion-edit-btn').forEach(item=>{
+		item.addEventListener('click', async(e)=>{
+			submitBtn.value = 'Update';	
+
+			const dataSetId = e.target.dataset.id;
+			const response = await fetch('/edit/'+dataSetId);
+			const data = await response.json();
+			console.log(data)
+			const {accountId, contact, desc, image, location, price, type, _id} = data;
+			email_inp.value = contact;
+			price_inp.value = price;
+			address_inp.value = location;
+			type_inp.value = type;
+			desc_inp.value = desc;
+			accountId_inp.value = accountId;
+
+			submitBtn.dataset.id = _id;
+			console.log(submitBtn.dataset.id);
+		})
+	})
+}
 
 //fetch user properties
 const userAccountId = document.getElementById('user-account-id');
@@ -294,9 +343,9 @@ const showListedProperties = (userProperties) => {
 							<div class="accordion-content">
                                 <p class="accordion-price">${item.price}<span class="accordion-hide-btn">&#9587;</span></p>
                                 <p class="accordion-location">${item.location}</p>
-                                <button class="accordion-btn accordion-remove-btn" data-id=${item.id}>remove</button>
-                                <button class="accordion-btn accordion-edit-btn" data-id=${item.id}>Edit</button>
-                                <button class="accordion-btn accordion-view-btn" data-id=${item.id}>view</button>
+                                <button class="accordion-btn accordion-remove-btn" data-id=${item._id}>remove</button>
+                                <button class="accordion-btn accordion-edit-btn" data-id=${item._id}>Edit</button>
+                                <button class="accordion-btn accordion-view-btn" data-id=${item._id}>view</button>
                             </div>`;
 	});
 	listedProperties.append(list);
@@ -304,6 +353,7 @@ const showListedProperties = (userProperties) => {
 	addListenerToAccordionHideBtn();
 	addListenerToAccordionRemoveBtn();
 	addListenerToAccordionViewBtn();
+	addListenerToAccordionEditBtn();
 };
 
 
@@ -351,7 +401,7 @@ function addListenerToAccordionViewBtn(){
 			if (id) {
 				console.log(typeof id);
 				modal_product = products.filter((product) => {
-					return product.id == id;
+					return product._id == id;
 				});
 				console.log(modal_product);
 				openModal(modal_product);
@@ -360,12 +410,12 @@ function addListenerToAccordionViewBtn(){
 	})
 }
 
-
 //deleting property
 function addListenerToAccordionRemoveBtn(){
 	document.querySelectorAll('.accordion-remove-btn').forEach(item=>{
 		item.addEventListener('click',async (e)=>{
 			console.log(e.target.parentElement.previousElementSibling);
+			console.log(e.target.dataset.id)
 			e.target.parentElement.previousElementSibling.remove();
 			e.target.parentElement.remove();
 			const response = await fetch('/delete/'+e.target.dataset.id);
