@@ -124,7 +124,7 @@ app.post("/contact", (req,res)=>{
 			res.end(req)
 		} else {
 			console.log('Email sent: ' + info.response);
-			res.end(req)
+			res.end(info.response)
 		}
 	});
 

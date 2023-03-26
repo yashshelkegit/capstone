@@ -154,8 +154,8 @@ modal_contact.addEventListener("click", async (e) => {
 		body: JSON.stringify(emailData),
 	}
 	const response = await fetch("/contact", options);
-	const data = await response.json();
-	console.log(data)
+	console.log(`Email sent : ${response}`)
+	modal.style.maxHeight = null;
 });
 
 //Adding property
@@ -265,8 +265,9 @@ const submitBtn = document.querySelector('.form-submit-btn');
 main_form.addEventListener('submit', (e)=>{
 	e.preventDefault();
 	const value = submitBtn.value;
-	if(value === 'Submit'){
+	if(value === 'submit'){
 		console.log(submitBtn.value)
+		main_form.submit();
 	}
 	if(value === 'Update'){
 		console.log(main_form)
@@ -383,6 +384,11 @@ function addListenerToAccordionHideBtn() {
 	Array.from(document.getElementsByClassName("accordion-hide-btn")).forEach(
 		(element) => {
 			element.addEventListener("click", (e) => {
+				console.log("acc hide btn");
+				if (submitBtn.value === "Update") {
+					console.log("acc hide btn");
+					main_form.reset();
+				}
 				e.target.parentElement.parentElement.style.maxHeight = "0rem";
 				e.target.parentElement.parentElement.style.padding = "0rem";
 				e.target.parentElement.parentElement.previousElementSibling.classList.remove(
