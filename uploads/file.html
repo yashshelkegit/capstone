@@ -1,0 +1,38 @@
+<!-- // Create an HTML form that allows the user to upload an image. This form should include an input field of type "file"
+and a button to submit the form. -->
+<form action="/upload" method="post">
+    <input type="file" name="imageData">
+    <button type="submit">Upload</button>
+</form>
+
+<!-- Create an HTML file and add an img tag with a placeholder src attribute. -->
+<img id="uploaded-image" src="#" alt="Uploaded image">
+
+
+<!-- Add some JavaScript code to handle the form submission and display the uploaded image. -->
+<script>
+    const form = document.querySelector('form');
+    const image = document.getElementById('uploaded-image');
+
+    form.addEventListener('submit', (event) => {
+        event.preventDefault();
+        const formData = new FormData(form);
+        fetch('/upload', {
+            method: 'POST',
+            body: formData
+        })
+            .then(response => response.json())
+            .then(data => {
+                const fileName = data.filename;
+                const imageUrl = `/uploads/${fileName}`;
+                image.src = imageUrl;
+            })
+            .catch(error => console.error(error));
+    });
+</script>
+
+Here, we're using the Fetch API to make a POST request to the server to upload the image. When the server responds with
+the filename of the uploaded image, we construct the URL of the image and set it as the src attribute of the img tag.
+
+Note that we've added an event listener to the form to prevent the default form submission behavior, which would cause
+the page to reload.

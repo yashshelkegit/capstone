@@ -1,0 +1,30 @@
+*{
+    margin: 0%;
+    padding: 0%;
+    box-sizing: border-box;
+    font-family: 'Courier New', Courier, monospace;
+}
+.login-form{
+    border: 1px solid;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    /* background: rgb(252, 245, 232); */
+}
+form{
+    box-shadow: 5px 5px 15px gray;
+}
+.inp{
+    /* border: 1px solid red; */
+    padding: 1rem;
+}
+.inp input{
+    padding: 1rem;
+    width: 25rem;
+}
+h2{
+    text-align: center;
+    font-family: sans-serif;
+    letter-spacing: 2px;
+}

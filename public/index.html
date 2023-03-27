@@ -19,7 +19,7 @@
       </div>
       <div class="links">
         <div class="link nav-btn">sell</div>
-        <div class="link">Login</div>
+        <!-- <div class="link nav-login-btn">Login</div> -->
       </div>
     </nav>
     <div class="body">
@@ -31,6 +31,7 @@
           </div>
           <div class="modal-section">
             <h2 class="modal-name">Name</h2>
+            <div><i class="fa fa-envelope"></i> <a href="mailto:yashshelke@gmail.com" class="custom-email">web.application@gmail.com</a></div><br>
             <p class="modal-price">Rs. 4509</p>
             <p class="modal-desc">
               Lorem Ipsum is simply dummy text of the printing and typesetting
@@ -44,6 +45,7 @@
               publishing software like Aldus PageMaker including versions of
               Lorem Ipsum.
             </p>
+            <div><i class="fa fa-map-marker"></i><a class="property-location"> National Highway No. 6 , Jalgaon - 425 002</a></div>
             <button
               class="modal-contact-btn email-btn"
               data-contact="yash@gmail.com"
@@ -97,13 +99,13 @@
         <div class="form">
           <section class="sidebar">
             <div class="acc">
-              <h2>Manage Properties</h2>
+              <h3>Manage Properties</h3>
             </div>
             <div class="property-list">
               <div class="head">
-                <p>Enter your account ID to check your Properties</p>
+                <p>Manage and check your Properties :</p>
               </div>
-              <input type="text" name="useraccount-id" id="user-account-id" class="user-account-id"/>
+              <input type="text" name="useraccount-id" id="user-account-id" class="user-account-id" placeholder="Enter Account Id"/>
               <input type="submit" name="" value="Check" class="check-property"/><br /><br />
               <hr />
               <ul class="property-lists">
@@ -131,15 +133,15 @@
           >
             <div class="email inp">
               <label class="lbl" for="email">Your email</label>
-              <input type="email" name="email" id="email" />
+              <input type="email" name="email" id="email" placeholder="Enter your E-mail"/>
             </div>
             <div class="name inp">
               <label class="lbl" for="price">Price</label>
-              <input type="number" name="price" id="price" />
+              <input type="number" name="price" id="price" placeholder="Enter Price"/>
             </div>
             <div class="address inp">
               <label class="lbl" for="location">Property Location</label>
-              <input type="text" name="location" id="location" />
+              <input type="text" name="location" id="location" placeholder="Enter Location"/>
             </div>
             <div class="type inp">
               <label class="lbl" for="type">Property Type</label>
@@ -153,11 +155,11 @@
             </div>
             <div class="file inp">
               <label class="lbl" for="file">Upload image</label>
-              <input type="file" name="img" id="file" required multiple />
+              <input type="file" name="img" id="file" required />
             </div>
             <div class="desc inp">
               <label class="lbl" for="desc">Description</label>
-              <input type="text" name="desc" id="desc" />
+              <input type="text" name="desc" id="desc" placeholder="Describe some info. about property"/>
             </div>
             <!-- id will be hidden -->
             <div class="id inp">
@@ -165,7 +167,7 @@
                 >Account ID (please enter same acc. id for all your
                 properties)</label
               >
-              <input type="text" name="id" id="id" />
+              <input type="text" name="id" id="id" placeholder="Enter Account Id"/>
             </div>
             <div class="add-btn">
               <input type="submit" value="submit" class="btn form-submit-btn" />
@@ -174,5 +176,30 @@
         </div>
       </article>
     </div>
+  <footer>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4">
+          <h4>About Us</h4>
+          <p>Real Estate web Application dedicated to real estate industry</p><br>
+        </div>
+        <div class="col-md-4">
+          <ul>
+            <li><i class="fa fa-map-marker"></i><a> National Highway No. 6 , Jalgaon - 425 002</a></li>
+            <li><i class="fa fa-phone"></i><a> 7030502701</a></li>
+            <li><i class="fa fa-envelope"></i> <a href="mailto:yashshelke@gmail.com">web.application@gmail.com</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <hr>
+          <p class="text-center">&copy; 2023 Real Estate web application. All rights reserved.</p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+
   </body>
 </html>

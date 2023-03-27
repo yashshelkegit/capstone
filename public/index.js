@@ -1,13 +1,10 @@
-
-
-
 let products;
 const product = async () => {
 	const response = await fetch("/products");
 	const data = await response.json();
 	products = data;
 	displayProducts(products);
-	console.log(products[0]._id)
+	console.log(products[0]._id);
 };
 product();
 
@@ -93,7 +90,14 @@ const displayProducts = async (products, calledFrom) => {
 	});
 };
 //initial page
-// setTimeout(displayProducts, 2000);
+
+//for login page
+// document
+// 	.querySelector(".nav-login-btn")
+// 	.addEventListener("click", async (e) => {
+// 		const response = await fetch("/login");
+// 		// const data = await response.json();
+// 	});
 
 //open modal box
 const modal = document.querySelector(".modal");
@@ -104,12 +108,14 @@ const modal_desc = document.querySelector(".modal-desc");
 const modal_contact = document.querySelector(".modal-contact-btn");
 const email_btn = document.querySelector(".email-btn");
 const save_btn = document.querySelector(".save-btn");
+const customEmailBtn = document.querySelector(".custom-email");
+const propertyLocation = document.querySelector(".property-location");
 
 let modal_product;
 
 mainContent.addEventListener("click", (e) => {
 	const id = e.target.dataset.id;
-	console.log(id)
+	console.log(id);
 	if (id) {
 		console.log(typeof id);
 		modal_product = products.filter((product) => {
@@ -120,15 +126,18 @@ mainContent.addEventListener("click", (e) => {
 	}
 });
 
-function openModal(product){
+function openModal(product) {
 	modal_img.src = modal_product[0].image;
 	modal_name.textContent = `this ${modal_product[0].type} can be yours`;
 	modal_price.textContent = `Rs. ${modal_product[0].price}`;
 	modal_desc.textContent = modal_product[0].desc;
 	modal_contact.dataset.contact = modal_product[0].contact;
+	customEmailBtn.textContent = modal_product[0].contact;
+	customEmailBtn.href = `mailto:${modal_product[0].contact}`;
+	propertyLocation.textContent = modal_product[0].location;
 	//returns undefined if not found
-	console.log(cart.find((item) => item.id === modal_product[0].id));
-	if (cart.find((item) => item.id === modal_product[0].id)) {
+	console.log(cart.find((item) => item._id === modal_product[0]._id));
+	if (cart.find((item) => item._id === modal_product[0]._id)) {
 		console.log("saved");
 		save_btn.textContent = "Remove from saved";
 	} else {
@@ -141,20 +150,19 @@ document.querySelector(".modal-cross").addEventListener("click", (e) => {
 	modal.style.maxHeight = null;
 });
 
-
 //send email
 modal_contact.addEventListener("click", async (e) => {
 	console.log(typeof e.target.dataset.contact);
 	const emailData = {
-		email: e.target.dataset.contact
-	}
+		email: e.target.dataset.contact,
+	};
 	const options = {
 		method: "POST",
-		headers: {"Content-Type":"application/json"},
+		headers: { "Content-Type": "application/json" },
 		body: JSON.stringify(emailData),
-	}
+	};
 	const response = await fetch("/contact", options);
-	console.log(`Email sent : ${response}`)
+	console.log(`Email sent : ${response}`);
 	modal.style.maxHeight = null;
 });
 
@@ -181,16 +189,16 @@ nav_btn.addEventListener("click", (e) => {
 	e.target.textContent = parent.style.display === "none" ? "buy" : "sell";
 });
 
-async function authenticate(){
-	const userInfo = localStorage.getItem('user');
-	if(userInfo){
-		const {userName, password} = JSON.parse(userInfo);
+async function authenticate() {
+	const userInfo = localStorage.getItem("user");
+	if (userInfo) {
+		const { userName, password } = JSON.parse(userInfo);
 		// showPropertyPage();
 		parent.style.display = "none";
 		add_parent.style.display = "block";
-	}else{
+	} else {
 		const response = await fetch("/login");
-		console.log(response.body)
+		console.log(response.body);
 		// document.body.innerHTML = response;
 	}
 }
@@ -210,7 +218,7 @@ save_btn.addEventListener("click", () => {
 
 	if (save_btn.textContent === "Remove from saved") {
 		console.log("remove");
-		cart = cart.filter((item) => item.id !== modal_product[0].id);
+		cart = cart.filter((item) => item._id !== modal_product[0]._id);
 		save_btn.textContent = "Save for review";
 		//display products if removed from saved
 		cartHeading ? displayProducts(cart, "cart") : null;
@@ -219,9 +227,9 @@ save_btn.addEventListener("click", () => {
 	}
 	//avoid duplicates
 	//find returns undefined if not found
-	if (!cart.find((item) => item.id === modal_product[0].id)) {
+	if (!cart.find((item) => item._id === modal_product[0]._id)) {
 		cart.push(
-			displayed_products.find((item) => item.id === modal_product[0].id)
+			displayed_products.find((item) => item._id === modal_product[0]._id)
 		);
 		//display products if removed from saved
 		cartHeading ? displayProducts(cart, "cart") : null;
@@ -229,7 +237,6 @@ save_btn.addEventListener("click", () => {
 	}
 	save_btn.textContent = "Remove from saved";
 });
-
 
 //getting form data////////////////////////////////////////////////////submit btn///////////////
 // const email = document.getElementById("email");
@@ -260,33 +267,33 @@ const img_inp = document.getElementById("file");
 const desc_inp = document.getElementById("desc");
 const accountId_inp = document.getElementById("id");
 const main_form = document.querySelector(".main-form");
-const submitBtn = document.querySelector('.form-submit-btn');
+const submitBtn = document.querySelector(".form-submit-btn");
 
-main_form.addEventListener('submit', (e)=>{
+main_form.addEventListener("submit", (e) => {
 	e.preventDefault();
 	const value = submitBtn.value;
-	if(value === 'submit'){
-		console.log(submitBtn.value)
+	if (value === "submit") {
+		console.log(submitBtn.value);
 		main_form.submit();
 	}
-	if(value === 'Update'){
-		console.log(main_form)
-		main_form.setAttribute('action', '/update-data/'+submitBtn.dataset.id);
-		console.log(e.target.value)
+	if (value === "Update") {
+		console.log(main_form);
+		main_form.setAttribute("action", "/update-data/" + submitBtn.dataset.id);
+		console.log(e.target.value);
 		main_form.submit();
 	}
-})
+});
 //editing property
-function addListenerToAccordionEditBtn(){
-	document.querySelectorAll('.accordion-edit-btn').forEach(item=>{
-		item.addEventListener('click', async(e)=>{
-			submitBtn.value = 'Update';	
+function addListenerToAccordionEditBtn() {
+	document.querySelectorAll(".accordion-edit-btn").forEach((item) => {
+		item.addEventListener("click", async (e) => {
+			submitBtn.value = "Update";
 
 			const dataSetId = e.target.dataset.id;
-			const response = await fetch('/edit/'+dataSetId);
+			const response = await fetch("/edit/" + dataSetId);
 			const data = await response.json();
-			console.log(data)
-			const {accountId, contact, desc, image, location, price, type, _id} = data;
+			console.log(data);
+			const { accountId, contact, desc, location, price, type, _id } = data;
 			email_inp.value = contact;
 			price_inp.value = price;
 			address_inp.value = location;
@@ -296,42 +303,44 @@ function addListenerToAccordionEditBtn(){
 
 			submitBtn.dataset.id = _id;
 			console.log(submitBtn.dataset.id);
-		})
-	})
+		});
+	});
 }
 
 //fetch user properties
-const userAccountId = document.getElementById('user-account-id');
-document.querySelector('.check-property').addEventListener('click',async(e)=>{
-	getUserProperty();
-})
-async function getUserProperty(){
+const userAccountId = document.getElementById("user-account-id");
+document
+	.querySelector(".check-property")
+	.addEventListener("click", async (e) => {
+		getUserProperty();
+	});
+async function getUserProperty() {
 	const value = userAccountId.value;
-	console.log(value)
-	console.log(typeof value)
-	if(value !== ''){
+	console.log(value);
+	console.log(typeof value);
+	if (value !== "") {
 		const body = {
-			accountId : value
+			accountId: value,
 		};
 		const options = {
-			method: 'POST',
+			method: "POST",
 			headers: {
-				'Content-Type': 'application/json'
+				"Content-Type": "application/json",
 			},
-			body: JSON.stringify(body)
-		}
-		const response = await fetch('/user-property', options);
+			body: JSON.stringify(body),
+		};
+		const response = await fetch("/user-property", options);
 		const data = await response.json();
 		console.log(data.length);
-		if(data.length !== 0){
+		if (data.length !== 0) {
 			showListedProperties(data);
-		}else{
-			console.log('no properties found');
-			alert('No Property found');
+		} else {
+			console.log("no properties found");
+			alert("No Property found");
 		}
-	}else{
-		console.log('please enter value');
-		alert('Enter Account ID');
+	} else {
+		console.log("please enter value");
+		alert("Enter Account ID");
 	}
 }
 
@@ -357,12 +366,11 @@ const showListedProperties = (userProperties) => {
 	addListenerToAccordionEditBtn();
 };
 
-
-function addListenerToAccordion(){
+function addListenerToAccordion() {
 	const accordion = document.getElementsByClassName("accordion");
 	const accordionContent = document.querySelectorAll(".accordion-content");
 	Array.from(accordion).forEach((item) => {
-		console.log(accordion)
+		console.log(accordion);
 		item.addEventListener("click", (e) => {
 			accordionContent.forEach((content) => {
 				content.style.maxHeight = "0rem";
@@ -388,6 +396,7 @@ function addListenerToAccordionHideBtn() {
 				if (submitBtn.value === "Update") {
 					console.log("acc hide btn");
 					main_form.reset();
+					submitBtn.value = "submit";
 				}
 				e.target.parentElement.parentElement.style.maxHeight = "0rem";
 				e.target.parentElement.parentElement.style.padding = "0rem";
@@ -399,9 +408,9 @@ function addListenerToAccordionHideBtn() {
 	);
 }
 
-function addListenerToAccordionViewBtn(){
-	document.querySelectorAll('.accordion-view-btn').forEach((item)=>{
-		item.addEventListener('click', (e)=>{
+function addListenerToAccordionViewBtn() {
+	document.querySelectorAll(".accordion-view-btn").forEach((item) => {
+		item.addEventListener("click", (e) => {
 			const id = e.target.dataset.id;
 			console.log(id);
 			if (id) {
@@ -412,19 +421,19 @@ function addListenerToAccordionViewBtn(){
 				console.log(modal_product);
 				openModal(modal_product);
 			}
-			})
-	})
+		});
+	});
 }
 
 //deleting property
-function addListenerToAccordionRemoveBtn(){
-	document.querySelectorAll('.accordion-remove-btn').forEach(item=>{
-		item.addEventListener('click',async (e)=>{
+function addListenerToAccordionRemoveBtn() {
+	document.querySelectorAll(".accordion-remove-btn").forEach((item) => {
+		item.addEventListener("click", async (e) => {
 			console.log(e.target.parentElement.previousElementSibling);
-			console.log(e.target.dataset.id)
+			console.log(e.target.dataset.id);
 			e.target.parentElement.previousElementSibling.remove();
 			e.target.parentElement.remove();
-			const response = await fetch('/delete/'+e.target.dataset.id);
-		})
-	})
+			const response = await fetch("/delete/" + e.target.dataset.id);
+		});
+	});
 }
