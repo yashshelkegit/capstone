@@ -18,14 +18,14 @@ let search_arr;
 const range = document.querySelector(".range");
 let range_arr = document.querySelector(".range");
 const range_otp = document.querySelector(".range-otp");
-range_otp.textContent = ` Rs. ${range.value * 100}`;
+range_otp.textContent = ` Rs. ${(range.value * 100000).toLocaleString()}`;
 
 range.addEventListener("change", (e) => {
 	// console.log(e.target.value * 100);
 	range_arr = products.filter((product) => {
-		return product.price <= e.target.value * 100;
+		return product.price <= e.target.value * 100000;
 	});
-	range_otp.textContent = ` Rs. ${e.target.value * 100}`;
+	range_otp.textContent = ` Rs. ${e.target.value * 100000}`;
 	displayProducts(range_arr);
 });
 
@@ -34,6 +34,8 @@ search.addEventListener("keyup", (e) => {
 
 	if (e.target.value === "") {
 		mainContent.innerHTML = "<h2>Please enter some value</h2>";
+		// search_arr = products;
+		// displayProducts(search_arr);
 		return;
 	} else {
 		search_arr = products.filter((product) => {
@@ -53,7 +55,8 @@ sidebar.addEventListener("click", (e) => {
 			arr = products;
 		} else {
 			arr = products.filter((value) => {
-				return value.location === e.target.dataset.id;
+				console.log(e.target.dataset.type)
+				return value.type === e.target.dataset.id;
 			});
 		}
 		console.log(arr);
@@ -81,7 +84,7 @@ const displayProducts = async (products, calledFrom) => {
                 <img src="${product.image}" alt="${product.type}" data-id="${product._id}"><br>
                 <div class="detail">
 				<span class="name">${product.type}</span><br>
-                <span class="price">Rs. ${product.price}</span>
+                <span class="price">Rs. ${(product.price)}</span>
 				</div>
                 </div>`;
 		const div = document.createElement("div");

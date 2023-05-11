@@ -1,3 +1,4 @@
+// C:\Users\Ritisha\capstone\public\temp\IMG_20221116_123546.jpg
 export const products = [
     {
 		id: 1,

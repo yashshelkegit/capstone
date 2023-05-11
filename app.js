@@ -1,5 +1,8 @@
 import express from "express";
 import nodemailer from "nodemailer";
+import multer from "multer";
+import fs from "fs";
+
 // const loginPage = fs.readFileSync('./public/register.html');
 
 import dotenv from "dotenv";
@@ -10,7 +13,7 @@ import property from "./models/db.js";
 import bodyParser from "body-parser";
 
 //for image upload
-import fileUpload from "express-fileUpload";
+import fileUpload from "express-fileupload";
 
 const app = express();
 app.use(express.static(process.env.PUBLIC_DIR));
@@ -25,7 +28,7 @@ app.get("/products", (req, res) => {
 	console.log("req arrrived");
 	property
 		.find()
-		.then((data) => console.log(res.end(JSON.stringify(data))))
+		.then((data) => res.end(JSON.stringify(data)))
 		.catch((err) => console.log(err));
 });
 
@@ -41,6 +44,7 @@ app.post("/user-property", (req, res) => {
 		.catch((err) => console.log(err));
 });
 
+///image
 app.post("/form-data", async (req, res) => {
 	// console.log(req)
 	if (!req.files || Object.keys(req.files).length === 0) {
@@ -48,10 +52,12 @@ app.post("/form-data", async (req, res) => {
 	}
 	const image = req.files.img;
 
-	image.mv(`./public/temp/${image.name}`, (err) => {
+	image.mv("C:/Users/Ritisha/capstone/public/temp/" + image.name, (err) => {
 		if (err) {
+			console.error(err);
 			return res.status(500).send(err);
 		}
+		console.log("File uploaded successfully");
 	});
 	const newProperty = new property({
 		accountId: req.body.id,
@@ -73,7 +79,26 @@ app.post("/form-data", async (req, res) => {
 		});
 });
 
-app.get("/delete/:id", (req, res) => {
+app.get("/delete/:id", async (req, res) => {
+	try {
+		const propertyToDelete = await property.findById(req.params.id);
+	
+		if (!propertyToDelete) {
+		  return res.status(404).send("Property not found");
+		}
+	
+		const imagePath = propertyToDelete.image;
+		fs.unlink(`./public/${imagePath}`, (err) => {
+			if (err) throw err;
+			console.log(`File ${imagePath} deleted`);
+		  });
+	
+		res.redirect("/");
+	  } catch (err) {
+		console.error(err);
+		res.status(500).send("Server error");
+	  }
+
 	property
 		.deleteOne({ _id: req.params.id })
 		.then((data) => console.log("deleted successfully " + data))
@@ -88,6 +113,16 @@ app.get("/edit/:id", (req, res) => {
 });
 
 app.post("/update-data/:id", (req, res) => {
+	const image = req.files.img;
+
+	image.mv("C:/Users/Ritisha/capstone/public/temp/" + image.name, (err) => {
+		if (err) {
+			console.error(err);
+			return res.status(500).send(err);
+		}
+		console.log("Update : File uploaded successfully");
+	});
+
 	property
 		.updateOne(
 			{ _id: req.params.id },
@@ -127,7 +162,7 @@ app.post("/contact", (req, res) => {
 	transporter.sendMail(mailOptions, (error, info) => {
 		if (error) {
 			console.log(error);
-			res.end(req);
+			res.status(403).send(req);
 		} else {
 			console.log("Email sent: " + info.response);
 			res.end(info.response);

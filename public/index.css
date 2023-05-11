@@ -167,7 +167,7 @@ li::marker{
     align-items: center;
     justify-content: center;
     font-size: 3.8rem;
-    margin-left: -1rem;
+    margin-left: .5rem;
     height: 6rem;
     width: 6rem;
     background: var(--icon-clr);
